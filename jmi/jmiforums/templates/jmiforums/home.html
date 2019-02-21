@@ -8,7 +8,9 @@
 </head>
 <body>
   {% for mod in moderator %}
-    {{ mod }}
+    <p>This is the moderator of <strong>JMI Forum</strong>.</p><br>
+    <p><strong>{{ mod.username }}</strong> of university {{ mod.university }} in {{ mod.department }}</p><br>
+    <p>This site is Under construction.</p>
   {% endfor %}  
 </body>
 </html>

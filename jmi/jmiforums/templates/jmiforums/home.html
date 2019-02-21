@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'tiny/css/prism' %}">
   <title>JMI Forum</title>
 </head>
 <body>
@@ -13,4 +20,7 @@
     <p>This site is Under construction.</p>
   {% endfor %}  
 </body>
+
+<script src="{% static 'tinymce/js/prism.js' %}"></script>
+
 </html>

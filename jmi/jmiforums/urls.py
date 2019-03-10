@@ -19,6 +19,7 @@ from . import views
 app_name = "jmiforums"
 
 urlpatterns = [
-    path('', views.homepage, name="homepage"),
+    path('', views.homepage, name='homepage'),
     path("register/", views.register, name="register"),
+    path("<slug:subforum_name>/", views.subforum, name='subforum'),
 ]

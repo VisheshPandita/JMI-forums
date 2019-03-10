@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Moderator
+from django.http import HttpResponse, Http404
+from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -9,7 +9,7 @@ from django.contrib import messages
 def homepage(request):
   return render(request=request,
                 template_name="jmiforums/home.html",
-                context={"moderator": Moderator.objects.all})
+                context={"moderator": Moderator.objects.all, "subforum": Subforum.objects.all})
 
 def register(request):
   if request.method == "POST":
@@ -24,9 +24,19 @@ def register(request):
     else:
       for msg in form.error_messages:
         print(form.error_messages[msg])
-
-
   form = UserCreationForm
   return render(request,
                 "jmiforums/register.html",
                 context={"form":form})
+
+def subforum(request, subforum_name):
+  try:
+    subforum = Subforum.objects.get(subforum_name=subforum_name)
+  except Subforum.DoesNotExist:
+    raise Http404("Subform does not exist")
+  
+  context={
+    'subforum': subforum,
+    'moderator': Moderator.objects.all()
+  }
+  return render(request, "jmiforums/subforum.html", context)

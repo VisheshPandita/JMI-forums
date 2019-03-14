@@ -9,27 +9,28 @@ from django.urls import reverse
 
 # Create your views here.
 def homepage(request):
-  return render(request=request,
-                template_name="jmiforums/home.html",
-                context={"moderator": Moderator.objects.all, "subforum": Subforum.objects.all})
+  if not request.user.is_authenticated:
+    return render(request, "jmiforums/login.html", {"message": None})
+  context={
+            "moderator": Moderator.objects.all,
+            "subforum": Subforum.objects.all,
+            "user": request.user,
+          }
+  return render(request, "jmiforums/home.html", context)
 
-def register(request):
-  if request.method == "POST":
-    form = UserCreationForm(request.POST)
-    if form.is_valid():
-      user = form.save()
-      username = form.cleaned_data.get('username')
-      messages.success(request, "New Account Created")
-      login(request, user)
+def login_view(request):
+  username = request.POST["username"]
+  password = request.POST["password"]
+  user = authenticate(request, username=username, password=password)
+  if user is not None:
+    login(request, user)
+    return HttpResponseRedirect(reverse("jmiforums:homepage"))
+  else:
+    return render(request, "jmiforums/login.html", {"message": "Invalid username/password. "})  
 
-      return redirect("jmiforums:homepage")
-    else:
-      for msg in form.error_messages:
-        print(form.error_messages[msg])
-  form = UserCreationForm
-  return render(request,
-                "jmiforums/register.html",
-                context={"form":form})
+def logout_view(request):
+  logout(request)
+  return render(request,"jmiforums/login.html", {"message": "Logged Out"})
 
 def subforum(request, subforum_name):
   try:

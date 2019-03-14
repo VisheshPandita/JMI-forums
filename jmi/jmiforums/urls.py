@@ -20,7 +20,8 @@ app_name = "jmiforums"
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    path("register/", views.register, name="register"),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
     path("<slug:subforum_name>/", views.subforum, name='subforum'),
     path("register/subforum/", views.create, name="create"),
 ]

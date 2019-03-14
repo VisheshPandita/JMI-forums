@@ -22,4 +22,5 @@ urlpatterns = [
     path('', views.homepage, name='homepage'),
     path("register/", views.register, name="register"),
     path("<slug:subforum_name>/", views.subforum, name='subforum'),
+    path("register/subforum/", views.create, name="create"),
 ]

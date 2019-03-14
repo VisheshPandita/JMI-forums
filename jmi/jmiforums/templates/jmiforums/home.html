@@ -9,6 +9,9 @@ Home Page
   {% endfor %}
   <p>This site is Under construction.</p>
   {% for sub in subforum %}
-    <a href="{% url 'jmiforums:subforum' sub.subforum_name %}">Go to {{sub.subforum_name}}</a>
+    <a href="{% url 'jmiforums:subforum' sub.subforum_name %}">Go to {{sub.subforum_name}}</a><br/>
   {% endfor %}
+
+  <a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a>
+
 {% endblock %}

@@ -19,11 +19,12 @@ class Moderator(models.Model):
 class Subforum(models.Model):
   subforum_id = models.AutoField(primary_key=True)
   subforum_name = models.CharField(max_length=50)
+  subforum_description = models.TextField(blank=True, null=True)
   ques_count = models.IntegerField(default=0)
   mod_id = models.ManyToManyField(Moderator, blank=True, related_name='moderator')
 
   def __str__(self):
-    return self.subforum_name
+    return f"{self.subforum_id} {self.subforum_name}"
 
 class User(models.Model):
   user_id = models.AutoField(primary_key=True)

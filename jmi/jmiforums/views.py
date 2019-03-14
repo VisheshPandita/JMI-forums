@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse, Http404
 from .models import *
+from .forum import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.urls import reverse
 
 # Create your views here.
 def homepage(request):
@@ -40,3 +42,18 @@ def subforum(request, subforum_name):
     'moderator': Moderator.objects.all()
   }
   return render(request, "jmiforums/subforum.html", context)
+
+def create(request):
+  form = Subforums(request.POST or None)
+  if form.is_valid():
+    form.save()
+    return HttpResponseRedirect(reverse('jmiforums:homepage'))
+
+  context = {
+    'form' : form
+  }
+
+  return render(request, 'jmiforums/createSub.html', context)  
+
+
+

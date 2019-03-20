@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.http import HttpResponse, Http404
+from django.contrib.auth.models import User
 from .models import *
 from .forum import *
 from django.contrib.auth.forms import UserCreationForm
@@ -17,6 +18,21 @@ def homepage(request):
             "user": request.user,
           }
   return render(request, "jmiforums/home.html", context)
+
+def register(request):
+  if request.method == 'POST':
+    form = UserRegisterForm(request.POST)
+    profile_form = ProfileForm(request.POST)
+    if form.is_valid() and profile_form.is_valid():
+      form.save()
+      profile_form.save()
+      username = form.cleaned_data.get('username')
+      messages.success(request, f'Account Created for {username}!')
+      return redirect('jmiforums:homepage')
+  else:  
+    form = UserRegisterForm()
+    profile_form = ProfileForm()
+  return render(request, 'jmiforums/register.html', {"form":form, "profile_form": profile_form,})
 
 def login_view(request):
   username = request.POST["username"]

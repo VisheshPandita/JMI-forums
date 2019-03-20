@@ -15,4 +15,10 @@ Log in
         <input name="password" type="password" />
         <input type="submit" value="Login" />
     </form>
+    <div class="border-top pt-3"> 
+        <small class="text-muted">
+            Make new account
+            <a class="ml-2" href="{% url 'jmiforums:register' %}">Sign Up</a>
+        </small>
+    </div>
 {% endblock %}

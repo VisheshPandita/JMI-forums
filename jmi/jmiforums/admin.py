@@ -5,11 +5,11 @@ from django.db import models
 
 # Register your models here.
 
-class UserAdmin(admin.ModelAdmin):
-  fieldsets = [
-    ("Essentials", {"fields" : ["email", "username", "password", "age", "created"]}),
-    ("Non-essentials", {"fields" : ["university", "department"]})
-  ]
+# class UserAdmin(admin.ModelAdmin):
+#   fieldsets = [
+#     ("Essentials", {"fields" : ["email", "username", "password", "age", "created"]}),
+#     ("Non-essentials", {"fields" : ["university", "department"]})
+#   ]
 
 # class QuestAdmin(admin.ModelAdmin):
 #   formfield_overrides = {
@@ -17,7 +17,6 @@ class UserAdmin(admin.ModelAdmin):
 #   }
 
 
-admin.site.register(Moderator, UserAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.register(Profile)
 admin.site.register(Subforum)
-# admin.site.register(Question, QuestAdmin)
+admin.site.register(Question)

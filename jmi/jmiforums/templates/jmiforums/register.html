@@ -1,0 +1,25 @@
+{% extends "jmiforums/header.html" %}
+{% block title %}
+Register
+{% endblock %}
+{% block body %}
+  <div class="container content-section">
+      <form method="POST">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">JMI Forum</legend>
+              {{ form.as_p }}
+              {{ profile_form.as_p }}
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Sign up</button>
+          </div>
+      </form>
+      <div class="border-top pt-3"> 
+          <small class="text-muted">
+              Already have an Account?
+              <a class="ml-2" href="{% url 'jmiforums:homepage' %}">Login</a>
+          </small>
+      </div>
+  </div>
+{% endblock %}

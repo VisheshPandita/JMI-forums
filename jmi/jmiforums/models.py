@@ -1,59 +1,43 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 
-# Create your models here.
-class Moderator(models.Model):
-  mod_id = models.AutoField(primary_key=True)
-  email = models.CharField(max_length=50)
-  username = models.CharField(max_length=50)
-  password = models.CharField(max_length=50)
+class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE)
   age = models.IntegerField()
   university = models.CharField(max_length=100)
   department = models.CharField(max_length=50)
-  created = models.DateTimeField("Created on", default=timezone.now())
-  subforum_id = models.IntegerField()
 
   def __str__(self):
-    return self.username
+    return f"{self.user.username} Profile"
+    
+class Moderator(models.Model):
+  mod = models.ForeignKey(User, on_delete=models.CASCADE)
+  name = models.CharField(max_length=50)
+  username = models.CharField(max_length=50)
+  email = models.CharField(max_length=50)
 
 class Subforum(models.Model):
-  subforum_id = models.AutoField(primary_key=True)
   subforum_name = models.CharField(max_length=50)
   subforum_description = models.TextField(blank=True, null=True)
-  ques_count = models.IntegerField(default=0)
-  mod_id = models.ManyToManyField(Moderator, blank=True, related_name='moderator')
+  users = models.ManyToManyField(User)
+  mods = models.ManyToManyField(Moderator)
+  sub_date = models.DateTimeField(default=timezone.now)
 
-  def __str__(self):
-    return f"{self.subforum_id} {self.subforum_name}"
-
-class User(models.Model):
-  user_id = models.AutoField(primary_key=True)
-  email = models.CharField(max_length=50)
-  username = models.CharField(max_length=50)
-  password = models.CharField(max_length=50)
-  age = models.IntegerField()
-  university = models.CharField(max_length=100)
-  department = models.CharField(max_length=50)
-  created = models.DateTimeField("Created on", default=timezone.now())
-  
-  def __str__(self):
-    return self.username
- 
- 
 class Question(models.Model):
-  ques_id = models.AutoField(primary_key=True)
-  user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_question')
-  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE, related_name='subforum_question')
+  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)
   ques_text = models.TextField()
+  ques_date = models.DateTimeField(default=timezone.now)
 
 class Answer(models.Model):
-  ans_id = models.AutoField(primary_key=True)
-  user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_answer')
-  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE, related_name='subforum_answer')
+  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)
   ans_text = models.TextField()
+  ans_date = models.DateTimeField(default=timezone.now)
 
 class Comment(models.Model):
-  comment_id = models.AutoField(primary_key=True)
-  user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_comment')
-  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE, related_name='subforum_comment')
-  comment_text = models.TextField()    
+  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+  ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+  comment_text = models.TextField()
+  comment_date = models.DateTimeField(default=timezone.now)  

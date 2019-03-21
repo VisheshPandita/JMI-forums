@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Profile(models.Model):
-  user = models.OneToOneField(User, on_delete=models.CASCADE)
+  user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
   age = models.IntegerField()
   university = models.CharField(max_length=100)
   department = models.CharField(max_length=50)

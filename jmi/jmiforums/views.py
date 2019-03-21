@@ -3,8 +3,10 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from .models import *
 from .forum import *
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import( UserCreationForm, 
+                                        UserChangeForm,
+                                        PasswordChangeForm)
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.urls import reverse
 
@@ -29,7 +31,7 @@ def register(request):
       username = form.cleaned_data.get('username')
       messages.success(request, f'Account Created for {username}!')
       return redirect('jmiforums:homepage')
-  else:  
+  else:
     form = UserRegisterForm()
     profile_form = ProfileForm()
   return render(request, 'jmiforums/register.html', {"form":form, "profile_form": profile_form,})
@@ -72,5 +74,35 @@ def create(request):
 
   return render(request, 'jmiforums/createSub.html', context)  
 
+def profile(request):
+  args = {'user': request.user}
+  return render(request, 'jmiforums/profile.html', args)
 
+def edit_profile(request):
+  if request.method == 'POST':
+    form = EditProfile(request.POST, instance=request.user)
+
+    if form.is_valid():
+      form.save()
+      return redirect("jmiforums:profile")
+  else:
+    form = EditProfile(instance=request.user)
+    args = {'form': form}
+    return render(request, 'jmiforums/edit_profile.html', args)
+
+def change_password(request):
+  if request.method == 'POST':
+    form = PasswordChangeForm(data=request.POST, user=request.user)
+
+    if form.is_valid():
+      form.save()
+      update_session_auth_hash(request, form.user)
+      return redirect('jmiforums:change_password')
+    else:
+      return redirect('jmiforums:change_password')
+
+  else:
+    form = PasswordChangeForm(user=request.user)
+    args = {'form': form}
+    return render(request, 'jmiforums/change_password.html', args)    
 

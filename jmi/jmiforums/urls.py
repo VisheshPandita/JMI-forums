@@ -23,7 +23,10 @@ urlpatterns = [
     # fix 2 routes below
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    path("<slug:subforum_name>/", views.subforum, name='subforum'),
     path("register/subforum/", views.create, name="create"),
     path("register/user/", views.register, name="register"),
+    path("profile/", views.profile, name="profile"),
+    path("profile/edit/", views.edit_profile, name='edit_profile'),
+    path("profile/edit/password/", views.change_password, name='change_password'),
+    path("<slug:subforum_name>/", views.subforum, name='subforum'),
 ]

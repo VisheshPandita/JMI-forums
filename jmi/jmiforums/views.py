@@ -9,6 +9,7 @@ from django.contrib.auth.forms import( UserCreationForm,
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib import messages
 from django.urls import reverse
+from django.db import transaction, DatabaseError
 
 # Create your views here.
 def homepage(request):
@@ -26,8 +27,13 @@ def register(request):
     form = UserRegisterForm(request.POST)
     profile_form = ProfileForm(request.POST)
     if form.is_valid() and profile_form.is_valid():
-      form.save()
-      profile_form.save()
+      try:
+        with transaction.atomic():
+          form.save()
+          profile_form.save()
+      except DatabaseError:
+        pass    
+
       username = form.cleaned_data.get('username')
       messages.success(request, f'Account Created for {username}!')
       return redirect('jmiforums:homepage')

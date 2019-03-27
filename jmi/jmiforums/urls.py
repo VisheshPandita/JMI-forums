@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
 
 app_name = "jmiforums"
 
@@ -28,5 +29,8 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),
+    path("profile/reset/password/", PasswordResetView.as_view(), name='reset_password'),
+    path("profile/reset/password/done/", PasswordResetDoneView.as_view(), name='reset_password_done'),
+    # path("profile/reset/password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/", PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     path("<slug:subforum_name>/", views.subforum, name='subforum'),
 ]

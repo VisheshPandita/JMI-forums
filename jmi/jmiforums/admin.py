@@ -20,3 +20,4 @@ from django.db import models
 admin.site.register(Profile)
 admin.site.register(Subforum)
 admin.site.register(Question)
+admin.site.register(Moderator)

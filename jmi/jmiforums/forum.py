@@ -23,16 +23,16 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['age', 'university', 'department']
 
-    def save(self, commit=True):
-        user = super(ProfileForm, self).save(commit=False)
-        user.age = self.cleaned_data['age']
-        user.university = self.cleaned_data['university']
-        user.department = self.cleaned_data['department']
+    # def save(self, commit=True):
+    #     user = super(ProfileForm, self).save(commit=False)
+    #     user.age = self.cleaned_data['age']
+    #     user.university = self.cleaned_data['university']
+    #     user.department = self.cleaned_data['department']
 
-        if commit:
-            user.save()
+    #     if commit:
+    #         user.save()
 
-        return user    
+    #     return user    
 
 class EditProfile(UserChangeForm):
     class Meta:

@@ -3,17 +3,47 @@
 Home Page
 {% endblock %}
 {% block body %}
-  {% for mod in moderator %}
+
+  <!-- This is navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">JMI forum</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">(under initial stage) <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+<!--  -->
+
+  <div class="container">
+    {% for mod in moderator %}
     <p>This is the moderator of <strong>JMI Forum</strong>.</p><br>
-    <p><strong>{{ mod.username }}</strong> of university {{ mod.university }} in {{ mod.department }}</p><br>
-  {% endfor %}
-  <p>This site is Under construction.</p>
-  {% for sub in subforum %}
-    <a href="{% url 'jmiforums:subforum' sub.subforum_name %}">Go to {{sub.subforum_name}}</a><br/>
-  {% endfor %}
+    <p><strong>{{ mod.username }}</strong></p><br>
+    {% endfor %}
+  </div>
 
-  <a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a>
+  <h2><p>This site is Under construction.</p></h2>
 
+  <div class="row">
+    <div class="col-md-3">
+      {% for sub in subforum %}
+        <a href="{% url 'jmiforums:subforum' sub.subforum_name %}">Go to {{sub.subforum_name}}</a><br/>
+      {% endfor %}
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-3"><a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a></div>
+
+  </div>
   <a href="{% url 'jmiforums:logout' %}">Logout</a>
-
 {% endblock %}

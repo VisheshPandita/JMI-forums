@@ -15,13 +15,18 @@ Home Page
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">(under initial stage) <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url 'jmiforums:profile' %}">Profile</a>
+        </li>
+        <li>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      
+      <a class="btn btn-primary" href="{% url 'jmiforums:logout' %}" role="button">Logout</a>
+
     </div>
   </nav>
 <!--  -->
@@ -45,5 +50,4 @@ Home Page
     <div class="col-md-3"><a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a></div>
 
   </div>
-  <a href="{% url 'jmiforums:logout' %}">Logout</a>
 {% endblock %}

@@ -7,6 +7,7 @@ from django.contrib.auth.forms import( UserCreationForm,
                                         UserChangeForm,
                                         PasswordChangeForm)
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
 from django.db import transaction, DatabaseError
@@ -29,8 +30,10 @@ def register(request):
     if form.is_valid() and profile_form.is_valid():
       try:
         with transaction.atomic():
-          form.save()
-          profile_form.save()
+          user = form.save()
+          profile = profile_form.save(commit=False)
+          profile.user = user
+          profile.save()
       except DatabaseError:
         pass    
 
@@ -68,6 +71,7 @@ def subforum(request, subforum_name):
   }
   return render(request, "jmiforums/subforum.html", context)
 
+@login_required
 def create(request):
   form = Subforums(request.POST or None)
   if form.is_valid():
@@ -80,10 +84,12 @@ def create(request):
 
   return render(request, 'jmiforums/createSub.html', context)  
 
+@login_required
 def profile(request):
   args = {'user': request.user}
   return render(request, 'jmiforums/profile.html', args)
 
+@login_required
 def edit_profile(request):
   if request.method == 'POST':
     form = EditProfile(request.POST, instance=request.user)
@@ -96,6 +102,7 @@ def edit_profile(request):
     args = {'form': form}
     return render(request, 'jmiforums/edit_profile.html', args)
 
+@login_required
 def change_password(request):
   if request.method == 'POST':
     form = PasswordChangeForm(data=request.POST, user=request.user)

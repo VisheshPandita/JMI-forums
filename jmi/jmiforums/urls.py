@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
 
 app_name = "jmiforums"
@@ -29,8 +31,8 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),
-    path("profile/reset/password/", PasswordResetView.as_view(), name='reset_password'),
-    path("profile/reset/password/done/", PasswordResetDoneView.as_view(), name='reset_password_done'),
+    # path("profile/reset/password/", PasswordResetView.as_view(), {'template_name':'jmiforums/reset_password.html', 'post_reset_redirect': 'jmiforums:reset_password_done', 'email_template_name': 'jmiforums/reset_password_email.html'}, name='reset_password'),
+    # path("profile/reset/password/done/", PasswordResetDoneView.as_view(), name='reset_password_done'),
     # path("profile/reset/password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/", PasswordResetConfirmView.as_view(), name='reset_password_confirm'),
     path("<slug:subforum_name>/", views.subforum, name='subforum'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

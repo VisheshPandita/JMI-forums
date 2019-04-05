@@ -9,6 +9,14 @@
     <p>First name: {{ user.first_name }}</p>
     <p>Last name: {{ user.last_name }}</p>
     <p>Email: {{ user.email }}</p>
+    <img src="{{ user.profile.image.url }}" width="240">
 </div>  
+
+<div class="border-top pt-3"> 
+          <small class="text-muted">
+              Edit your Profile<a class="ml-2" href="{% url 'jmiforums:edit_profile' %}"> Here</a><br>
+              Edit your Password<a class="ml-2" href="{% url 'jmiforums:change_password' %}"> Here</a>
+          </small>
+      </div>
 
 {% endblock %}

@@ -9,6 +9,7 @@ class Profile(models.Model):
   age = models.IntegerField(default=18)
   university = models.CharField(max_length=100, default='')
   department = models.CharField(max_length=50, default='')
+  image = models.ImageField( upload_to='profile_image', blank=True)
 
 
 # @receiver(post_save, sender=User)

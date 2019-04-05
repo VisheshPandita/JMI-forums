@@ -113,9 +113,9 @@ def change_password(request):
     if form.is_valid():
       form.save()
       update_session_auth_hash(request, form.user)
-      return redirect('jmiforums:change_password')
+      return redirect('jmiforums:profile')
     else:
-      return redirect('jmiforums:change_password')
+      return redirect('jmiforums:profile')
 
   else:
     form = PasswordChangeForm(user=request.user)

@@ -46,14 +46,17 @@ def register(request):
   return render(request, 'jmiforums/register.html', {"form":form, "profile_form": profile_form,})
 
 def login_view(request):
-  username = request.POST["username"]
-  password = request.POST["password"]
-  user = authenticate(request, username=username, password=password)
-  if user is not None:
-    login(request, user)
-    return HttpResponseRedirect(reverse("jmiforums:homepage"))
+  if request.method == 'POST':
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+      login(request, user)
+      return HttpResponseRedirect(reverse("jmiforums:homepage"))
+    else:
+      return render(request, "jmiforums/login.html", {"message": "Invalid username/password. "})  
   else:
-    return render(request, "jmiforums/login.html", {"message": "Invalid username/password. "})  
+    return render(request, 'jmiforums/login.html')
 
 def logout_view(request):
   logout(request)

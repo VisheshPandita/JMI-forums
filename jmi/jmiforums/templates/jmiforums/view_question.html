@@ -1,0 +1,17 @@
+{% extends "jmiforums/header.html" %}
+{% block title %}
+Subforum/{{ subforum.subforum_name }}
+{% endblock %}
+{% block body %}
+
+    <h3>Subforum {{subforum.subforum_id}} : {{subforum.subforum_name}}</h1>
+<br>
+
+    <h1>Question</h1>
+    <div class="container">
+        <p>{{ ques_text }}</p>
+    </div>
+
+
+    <a href="{% url 'jmiforums:homepage' %}">Go back</a>
+{% endblock %}

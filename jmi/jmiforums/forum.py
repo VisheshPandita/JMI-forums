@@ -11,6 +11,13 @@ class Subforums(forms.ModelForm):
             'subforum_description'
         ]
 
+class Questions(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            'ques_text'
+        ]        
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

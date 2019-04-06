@@ -65,12 +65,14 @@ def logout_view(request):
 def subforum(request, subforum_name):
   try:
     subforum = Subforum.objects.get(subforum_name=subforum_name)
+    sub_id = Subforum.objects.get(subforum_name=subforum_name)
   except Subforum.DoesNotExist:
     raise Http404("Subform does not exist")
   
   context={
     'subforum': subforum,
-    'moderator': Moderator.objects.all()
+    'moderator': Moderator.objects.all(),
+    'question': Question.objects.filter(subforum_id_id=sub_id).values()
   }
   return render(request, "jmiforums/subforum.html", context)
 
@@ -122,3 +124,28 @@ def change_password(request):
     args = {'form': form}
     return render(request, 'jmiforums/change_password.html', args)    
 
+@login_required
+def question(request, subforum_name):
+  form = Questions(request.POST or None)
+  if form.is_valid():
+    question = form.save(commit=False)
+    question.user_id = User.objects.get(pk=request.user.pk)
+    question.subforum_id = Subforum.objects.get(subforum_name=subforum_name)
+    question.save()
+    return HttpResponseRedirect(reverse('jmiforums:homepage'))
+
+  context = {
+    'form' : form,
+  }
+
+  return render(request, 'jmiforums/question.html', context) 
+
+@login_required
+def view_question(request, subforum_name, ques_id):
+    ques = Question.objects.get(pk=ques_id)
+    ques_text = ques.ques_text
+
+    context = {
+      'ques_text': ques_text
+    }
+    return render(request, 'jmiforums/view_question.html', context)

@@ -6,7 +6,16 @@ Subforum/{{ subforum.subforum_name }}
 
     <h3>Subforum {{subforum.subforum_id}} : {{subforum.subforum_name}}</h1>
     <h3>{{subforum.ques_count}}</h3>
-    <a href="{% url 'jmiforums:homepage' %}">Go back</a>
+<br>
+
+    <h1>Questions</h1>
+    <ul>
+        {% for q in question %}
+            <a href="{% url 'jmiforums:view_question' subforum.subforum_name q.id %}"><li>{{ q.ques_text }}</li></a>
+        {% empty %}
+            <li>No question!</li>    
+        {% endfor %}
+    </ul>
 
     <h2>Moderators</h2>
     <ul>
@@ -16,4 +25,6 @@ Subforum/{{ subforum.subforum_name }}
             <li>No mods.</li>    
         {% endfor %}
     </ul>
+
+    <a href="{% url 'jmiforums:homepage' %}">Go back</a>
 {% endblock %}

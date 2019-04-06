@@ -1,0 +1,158 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+0001_initial.py	../jmiforums/migrations/0001_initial.py	1;"	kind:file	line:1
+0002_profile_image.py	../jmiforums/migrations/0002_profile_image.py	1;"	kind:file	line:1
+ALLOWED_HOSTS	../jmi/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
+AUTH_PASSWORD_VALIDATORS	../jmi/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:93
+Answer	../jmiforums/models.py	/^class Answer(models.Model):$/;"	kind:class	line:49
+Aritcles	../jmiforums/models.py	/^class Aritcles(models.Model):$/;"	kind:class	line:43
+BASE_DIR	../jmi/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+Comment	../jmiforums/models.py	/^class Comment(models.Model):$/;"	kind:class	line:55
+DATABASES	../jmi/settings.py	/^DATABASES = {$/;"	kind:variable	line:78
+DEBUG	../jmi/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+EditProfile	../jmiforums/forum.py	/^class EditProfile(UserChangeForm):$/;"	kind:class	line:37
+INSTALLED_APPS	../jmi/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
+JmiforumsConfig	../jmiforums/apps.py	/^class JmiforumsConfig(AppConfig):$/;"	kind:class	line:4
+LANGUAGE_CODE	../jmi/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:112
+MEDIA_ROOT	../jmi/settings.py	/^MEDIA_ROOT = os.path.join(BASE_DIR, 'images\/media')/;"	kind:variable	line:129
+MEDIA_URL	../jmi/settings.py	/^MEDIA_URL = '\/media\/'$/;"	kind:variable	line:128
+MIDDLEWARE	../jmi/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:44
+Meta	../jmiforums/forum.py	/^    class Meta:$/;"	kind:class	line:17
+Meta	../jmiforums/forum.py	/^    class Meta:$/;"	kind:class	line:22
+Meta	../jmiforums/forum.py	/^    class Meta:$/;"	kind:class	line:38
+Meta	../jmiforums/forum.py	/^    class Meta:$/;"	kind:class	line:7
+Migration	../jmiforums/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:9
+Migration	../jmiforums/migrations/0002_profile_image.py	/^class Migration(migrations.Migration):$/;"	kind:class	line:6
+Moderator	../jmiforums/models.py	/^class Moderator(models.Model):$/;"	kind:class	line:24
+Profile	../jmiforums/models.py	/^class Profile(models.Model):$/;"	kind:class	line:7
+ProfileForm	../jmiforums/forum.py	/^class ProfileForm(forms.ModelForm):$/;"	kind:class	line:21
+Question	../jmiforums/models.py	/^class Question(models.Model):$/;"	kind:class	line:37
+ROOT_URLCONF	../jmi/settings.py	/^ROOT_URLCONF = 'jmi.urls'$/;"	kind:variable	line:54
+SECRET_KEY	../jmi/settings.py	/^SECRET_KEY = '4rmg#p01-)xq1kb(85##a!-(unu&p0n!u1lu5by0g6p#knexp0'$/;"	kind:variable	line:23
+STATIC_URL	../jmi/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:126
+Subforum	../jmiforums/models.py	/^class Subforum(models.Model):$/;"	kind:class	line:30
+Subforums	../jmiforums/forum.py	/^class Subforums(forms.ModelForm):$/;"	kind:class	line:6
+TEMPLATES	../jmi/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:56
+TIME_ZONE	../jmi/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:114
+USE_I18N	../jmi/settings.py	/^USE_I18N = True$/;"	kind:variable	line:116
+USE_L10N	../jmi/settings.py	/^USE_L10N = True$/;"	kind:variable	line:118
+USE_TZ	../jmi/settings.py	/^USE_TZ = True$/;"	kind:variable	line:120
+UserRegisterForm	../jmiforums/forum.py	/^class UserRegisterForm(UserCreationForm):$/;"	kind:class	line:14
+WSGI_APPLICATION	../jmi/settings.py	/^WSGI_APPLICATION = 'jmi.wsgi.application'$/;"	kind:variable	line:72
+__init__.py	../jmi/__init__.py	1;"	kind:file	line:1
+__init__.py	../jmiforums/__init__.py	1;"	kind:file	line:1
+__init__.py	../jmiforums/migrations/__init__.py	1;"	kind:file	line:1
+admin.py	../jmiforums/admin.py	1;"	kind:file	line:1
+age	../jmiforums/models.py	/^  age = models.IntegerField(default=18)$/;"	kind:variable	line:9
+ans_date	../jmiforums/models.py	/^  ans_date = models.DateTimeField(default=timezone.now)$/;"	kind:variable	line:53
+ans_text	../jmiforums/models.py	/^  ans_text = models.TextField()$/;"	kind:variable	line:52
+app_name	../jmiforums/urls.py	/^app_name = "jmiforums"$/;"	kind:variable	line:22
+application	../jmi/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+apps.py	../jmiforums/apps.py	1;"	kind:file	line:1
+arti_text	../jmiforums/models.py	/^  arti_text = models.TextField()$/;"	kind:variable	line:46
+atri_date	../jmiforums/models.py	/^  atri_date = models.DateTimeField(default=timezone.now)$/;"	kind:variable	line:47
+change_password	../jmiforums/views.py	/^def change_password(request):$/;"	kind:function	line:109
+comment_date	../jmiforums/models.py	/^  comment_date = models.DateTimeField(default=timezone.now)  /;"	kind:variable	line:59
+comment_text	../jmiforums/models.py	/^  comment_text = models.TextField()$/;"	kind:variable	line:58
+create	../jmiforums/views.py	/^def create(request):$/;"	kind:function	line:78
+department	../jmiforums/models.py	/^  department = models.CharField(max_length=50, default='')$/;"	kind:variable	line:11
+dependencies	../jmiforums/migrations/0001_initial.py	/^    dependencies = [$/;"	kind:variable	line:13
+dependencies	../jmiforums/migrations/0002_profile_image.py	/^    dependencies = [$/;"	kind:variable	line:8
+edit_profile	../jmiforums/views.py	/^def edit_profile(request):$/;"	kind:function	line:96
+email	../jmiforums/forum.py	/^    email = forms.EmailField(required=True)$/;"	kind:variable	line:15
+email	../jmiforums/models.py	/^  email = models.CharField(max_length=50)$/;"	kind:variable	line:28
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),$/;"	kind:variable	line:109
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),$/;"	kind:variable	line:119
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),$/;"	kind:variable	line:89
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),$/;"	kind:variable	line:99
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jmiforums.Question'),$/;"	kind:variable	line:114
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jmiforums.Question'),$/;"	kind:variable	line:94
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jmiforums.Subforum'),$/;"	kind:variable	line:104
+field	../jmiforums/migrations/0001_initial.py	/^            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='jmiforums.Subforum'),$/;"	kind:variable	line:84
+field	../jmiforums/migrations/0002_profile_image.py	/^            field=models.ImageField(blank=True, upload_to='profile_image'),$/;"	kind:variable	line:16
+fields	../jmiforums/forum.py	/^        fields = [$/;"	kind:variable	line:9
+fields	../jmiforums/forum.py	/^        fields = ['age', 'university', 'department']$/;"	kind:variable	line:24
+fields	../jmiforums/forum.py	/^        fields = ['email', 'first_name', 'last_name', 'password']$/;"	kind:variable	line:40
+fields	../jmiforums/forum.py	/^        fields = ['username', 'email', 'password1', 'password2']$/;"	kind:variable	line:19
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:20
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:28
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:36
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:44
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:54
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:64
+fields	../jmiforums/migrations/0001_initial.py	/^            fields=[$/;"	kind:variable	line:72
+forum.py	../jmiforums/forum.py	1;"	kind:file	line:1
+homepage	../jmiforums/views.py	/^def homepage(request):$/;"	kind:function	line:16
+image	../jmiforums/models.py	/^  image = models.ImageField( upload_to='profile_image', blank=True)$/;"	kind:variable	line:12
+initial	../jmiforums/migrations/0001_initial.py	/^    initial = True$/;"	kind:variable	line:11
+login_view	../jmiforums/views.py	/^def login_view(request):$/;"	kind:function	line:48
+logout_view	../jmiforums/views.py	/^def logout_view(request):$/;"	kind:function	line:61
+manage.py	../manage.py	1;"	kind:file	line:1
+mod	../jmiforums/models.py	/^  mod = models.ForeignKey(User, on_delete=models.CASCADE)$/;"	kind:variable	line:25
+model	../jmiforums/forum.py	/^        model = Profile$/;"	kind:variable	line:23
+model	../jmiforums/forum.py	/^        model = Subforum$/;"	kind:variable	line:8
+model	../jmiforums/forum.py	/^        model = User$/;"	kind:variable	line:18
+model	../jmiforums/forum.py	/^        model = User$/;"	kind:variable	line:39
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='answer',$/;"	kind:variable	line:112
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='answer',$/;"	kind:variable	line:117
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='aritcles',$/;"	kind:variable	line:102
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='aritcles',$/;"	kind:variable	line:107
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='comment',$/;"	kind:variable	line:92
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='comment',$/;"	kind:variable	line:97
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='question',$/;"	kind:variable	line:82
+model_name	../jmiforums/migrations/0001_initial.py	/^            model_name='question',$/;"	kind:variable	line:87
+model_name	../jmiforums/migrations/0002_profile_image.py	/^            model_name='profile',$/;"	kind:variable	line:14
+models.py	../jmiforums/models.py	1;"	kind:file	line:1
+mods	../jmiforums/models.py	/^  mods = models.ManyToManyField(Moderator)$/;"	kind:variable	line:34
+name	../jmiforums/apps.py	/^    name = 'jmiforums'$/;"	kind:variable	line:5
+name	../jmiforums/migrations/0001_initial.py	/^            name='Answer',$/;"	kind:variable	line:19
+name	../jmiforums/migrations/0001_initial.py	/^            name='Aritcles',$/;"	kind:variable	line:27
+name	../jmiforums/migrations/0001_initial.py	/^            name='Comment',$/;"	kind:variable	line:35
+name	../jmiforums/migrations/0001_initial.py	/^            name='Moderator',$/;"	kind:variable	line:43
+name	../jmiforums/migrations/0001_initial.py	/^            name='Profile',$/;"	kind:variable	line:53
+name	../jmiforums/migrations/0001_initial.py	/^            name='Question',$/;"	kind:variable	line:63
+name	../jmiforums/migrations/0001_initial.py	/^            name='Subforum',$/;"	kind:variable	line:71
+name	../jmiforums/migrations/0001_initial.py	/^            name='ques_id',$/;"	kind:variable	line:113
+name	../jmiforums/migrations/0001_initial.py	/^            name='ques_id',$/;"	kind:variable	line:93
+name	../jmiforums/migrations/0001_initial.py	/^            name='subforum_id',$/;"	kind:variable	line:103
+name	../jmiforums/migrations/0001_initial.py	/^            name='subforum_id',$/;"	kind:variable	line:83
+name	../jmiforums/migrations/0001_initial.py	/^            name='user_id',$/;"	kind:variable	line:108
+name	../jmiforums/migrations/0001_initial.py	/^            name='user_id',$/;"	kind:variable	line:118
+name	../jmiforums/migrations/0001_initial.py	/^            name='user_id',$/;"	kind:variable	line:88
+name	../jmiforums/migrations/0001_initial.py	/^            name='user_id',$/;"	kind:variable	line:98
+name	../jmiforums/migrations/0002_profile_image.py	/^            name='image',$/;"	kind:variable	line:15
+name	../jmiforums/models.py	/^  name = models.CharField(max_length=50)$/;"	kind:variable	line:26
+operations	../jmiforums/migrations/0001_initial.py	/^    operations = [$/;"	kind:variable	line:17
+operations	../jmiforums/migrations/0002_profile_image.py	/^    operations = [$/;"	kind:variable	line:12
+profile	../jmiforums/views.py	/^def profile(request):$/;"	kind:function	line:91
+ques_date	../jmiforums/models.py	/^  ques_date = models.DateTimeField(default=timezone.now)$/;"	kind:variable	line:41
+ques_id	../jmiforums/models.py	/^  ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)$/;"	kind:variable	line:51
+ques_id	../jmiforums/models.py	/^  ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)$/;"	kind:variable	line:57
+ques_text	../jmiforums/models.py	/^  ques_text = models.TextField()$/;"	kind:variable	line:40
+register	../jmiforums/views.py	/^def register(request):$/;"	kind:function	line:26
+settings.py	../jmi/settings.py	1;"	kind:file	line:1
+sub_date	../jmiforums/models.py	/^  sub_date = models.DateTimeField(default=timezone.now)$/;"	kind:variable	line:35
+subforum	../jmiforums/views.py	/^def subforum(request, subforum_name):$/;"	kind:function	line:65
+subforum_description	../jmiforums/models.py	/^  subforum_description = models.TextField(blank=True, null=True)$/;"	kind:variable	line:32
+subforum_id	../jmiforums/models.py	/^  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)$/;"	kind:variable	line:39
+subforum_id	../jmiforums/models.py	/^  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)$/;"	kind:variable	line:45
+subforum_name	../jmiforums/models.py	/^  subforum_name = models.CharField(max_length=50)$/;"	kind:variable	line:31
+tests.py	../jmiforums/tests.py	1;"	kind:file	line:1
+university	../jmiforums/models.py	/^  university = models.CharField(max_length=100, default='')$/;"	kind:variable	line:10
+urlpatterns	../jmi/urls.py	/^urlpatterns = [$/;"	kind:variable	line:19
+urlpatterns	../jmiforums/urls.py	/^urlpatterns = [$/;"	kind:variable	line:24
+urls.py	../jmi/urls.py	1;"	kind:file	line:1
+urls.py	../jmiforums/urls.py	1;"	kind:file	line:1
+user	../jmiforums/models.py	/^  user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)$/;"	kind:variable	line:8
+user_id	../jmiforums/models.py	/^  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)$/;"	kind:variable	line:38
+user_id	../jmiforums/models.py	/^  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)$/;"	kind:variable	line:44
+user_id	../jmiforums/models.py	/^  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)$/;"	kind:variable	line:50
+user_id	../jmiforums/models.py	/^  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)$/;"	kind:variable	line:56
+username	../jmiforums/models.py	/^  username = models.CharField(max_length=50)$/;"	kind:variable	line:27
+users	../jmiforums/models.py	/^  users = models.ManyToManyField(User)$/;"	kind:variable	line:33
+views.py	../jmiforums/views.py	1;"	kind:file	line:1
+wsgi.py	../jmi/wsgi.py	1;"	kind:file	line:1

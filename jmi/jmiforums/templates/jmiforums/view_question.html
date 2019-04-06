@@ -7,11 +7,21 @@ Subforum/{{ subforum.subforum_name }}
     <h3>Subforum {{subforum.subforum_id}} : {{subforum.subforum_name}}</h1>
 <br>
 
-    <h1>Question</h1>
+    <h1>Question:</h1>
     <div class="container">
-        <p>{{ ques_text }}</p>
+        <p><h2>{{ ques_text }}</h2></p>
+        <ul>
+            {% for a in ans %}
+                <li>{{ a.ans_text }}</li>
+            {% empty %}
+                <li>No answers.</li>    
+            {% endfor %}
+        </ul>
+
     </div>
 
+    <a href="{% url 'jmiforums:answer' subforum_name ques_id %}">Give Answer</a>
 
+<br>
     <a href="{% url 'jmiforums:homepage' %}">Go back</a>
 {% endblock %}

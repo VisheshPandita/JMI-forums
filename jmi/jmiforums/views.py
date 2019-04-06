@@ -132,7 +132,7 @@ def question(request, subforum_name):
     question.user_id = User.objects.get(pk=request.user.pk)
     question.subforum_id = Subforum.objects.get(subforum_name=subforum_name)
     question.save()
-    return HttpResponseRedirect(reverse('jmiforums:homepage'))
+    return HttpResponseRedirect('/%s/' %subforum_name)
 
   context = {
     'form' : form,
@@ -144,8 +144,28 @@ def question(request, subforum_name):
 def view_question(request, subforum_name, ques_id):
     ques = Question.objects.get(pk=ques_id)
     ques_text = ques.ques_text
+    ans = Answer.objects.filter(ques_id=ques_id).values()
 
     context = {
-      'ques_text': ques_text
+      'ques_text': ques_text,
+      'subforum_name': subforum_name,
+      'ques_id': ques.id,
+      'ans': ans,
     }
     return render(request, 'jmiforums/view_question.html', context)
+
+@login_required
+def answer(request, subforum_name, ques_id):
+  form = Answers(request.POST or None)
+  if form.is_valid():
+    answer = form.save(commit=False)
+    answer.user_id = User.objects.get(pk=request.user.pk)
+    answer.ques_id = Question.objects.get(pk=ques_id)
+    answer.save()
+    return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
+
+  context = {
+    'form' : form,
+  }
+
+  return render(request, 'jmiforums/answer.html', context)

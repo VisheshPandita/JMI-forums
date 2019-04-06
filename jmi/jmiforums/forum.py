@@ -18,6 +18,13 @@ class Questions(forms.ModelForm):
             'ques_text'
         ]        
 
+class Answers(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = [
+            'ans_text'
+        ] 
+
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

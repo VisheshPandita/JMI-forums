@@ -23,7 +23,6 @@ app_name = "jmiforums"
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
-    # fix 2 routes below
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path("register/subforum/", views.create, name="create"),
@@ -31,6 +30,7 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("<slug:subforum_name>/question/", views.question, name="question"),
     path("<slug:subforum_name>/<int:ques_id>/view/", views.view_question, name="view_question"),
+    path("<slug:subforum_name>/<int:ques_id>/answer/", views.answer, name='answer'),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),
     # path("profile/reset/password/", PasswordResetView.as_view(), {'template_name':'jmiforums/reset_password.html', 'post_reset_redirect': 'jmiforums:reset_password_done', 'email_template_name': 'jmiforums/reset_password_email.html'}, name='reset_password'),

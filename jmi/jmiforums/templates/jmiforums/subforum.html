@@ -17,14 +17,20 @@ Subforum/{{ subforum.subforum_name }}
         {% endfor %}
     </ul>
 
-    <h2>Moderators</h2>
-    <ul>
-        {% for mod in moderator %}
-            <li>{{ mod }}</li>
-        {% empty %}
-            <li>No mods.</li>    
-        {% endfor %}
-    </ul>
+    <a href="{% url 'jmiforums:question' subforum.subforum_name %}">Ask Question</a>
+
+    <div class="border-top pt-3"> 
+        <small class="text-muted">
+            <h4>Moderators</h4>
+            <ul>
+                {% for mod in moderator %}
+                    <li>{{ mod }}</li>
+                {% empty %}
+                    <li>No mods.</li>    
+                {% endfor %}
+            </ul>
+        </small>
+    </div>
 
     <a href="{% url 'jmiforums:homepage' %}">Go back</a>
 {% endblock %}

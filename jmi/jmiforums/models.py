@@ -37,22 +37,29 @@ class Subforum(models.Model):
   mods = models.ManyToManyField(Moderator)
   sub_date = models.DateTimeField(default=timezone.now)
 
+  def __str__(self):
+    return self.subforum_name
+
+
 class Question(models.Model):
   user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
   subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)
+  upvote = models.ManyToManyField(User,blank=True, related_name='ques_upvote')
   ques_text = models.TextField()
   ques_date = models.DateTimeField(default=timezone.now)
 
-class Aritcles(models.Model):
-  user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-  subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)
-  arti_text = models.TextField()
-  atri_date = models.DateTimeField(default=timezone.now)
+
+# class Aritcles(models.Model):
+#   user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+#   subforum_id = models.ForeignKey(Subforum, on_delete=models.CASCADE)
+#   arti_text = models.TextField()
+#   atri_date = models.DateTimeField(default=timezone.now)
 
 class Answer(models.Model):
   user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
   ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)
   ans_text = models.TextField()
+  upvote = models.ManyToManyField(User, blank=True, related_name='ans_upvote')
   ans_date = models.DateTimeField(default=timezone.now)
 
 class Comment(models.Model):

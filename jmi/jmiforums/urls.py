@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+from .views import PostListView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
@@ -22,17 +23,20 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, 
 app_name = "jmiforums"
 
 urlpatterns = [
-    path('', views.homepage, name='homepage'),
+    path('', PostListView.as_view(), name='homepage'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path("register/subforum/", views.create, name="create"),
     path("register/user/", views.register, name="register"),
     path("profile/", views.profile, name="profile"),
     path("<slug:subforum_name>/question/", views.question, name="question"),
+    path("question/", views.instant_question, name="instant_question"),
     path("<slug:subforum_name>/<int:ques_id>/view/", views.view_question, name="view_question"),
-    path("<slug:subforum_name>/<int:ques_id>/answer/", views.answer, name='answer'),
+    # path("<slug:subforum_name>/<int:ques_id>/answer/", views.answer, name='answer'),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),
+    # path("upvote/", views.upvote, name='upvote'),
+    # path("article/<slug:subforum_name>", views.article, name='article'),
     # path("profile/reset/password/", PasswordResetView.as_view(), {'template_name':'jmiforums/reset_password.html', 'post_reset_redirect': 'jmiforums:reset_password_done', 'email_template_name': 'jmiforums/reset_password_email.html'}, name='reset_password'),
     # path("profile/reset/password/done/", PasswordResetDoneView.as_view(), name='reset_password_done'),
     # path("profile/reset/password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/", PasswordResetConfirmView.as_view(), name='reset_password_confirm'),

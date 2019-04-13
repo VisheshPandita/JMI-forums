@@ -9,10 +9,27 @@ Subforum/{{ subforum.subforum_name }}
 
     <h1>Question:</h1>
     <div class="container">
-        <p><h2>{{ ques_text }}</h2></p>
+        <p><h2>{{ ques.ques_text }}</h2></p>
+        <p>Upvotes: {{ ques.upvote.count }}</p>
+        <small class="text-muted">
+            <ul>
+                {% for c in com %}
+                    <li>{{ c.comment_text }}</li>
+                {% empty %}
+                    <li>No comments.</li>    
+                {% endfor %}
+            </ul>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form2.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+        </small>    
         <ul>
             {% for a in ans %}
-                <li>{{ a.ans_text }}</li>
+                <li>
+                    {{ a.ans_text }}
+                </li>
             {% empty %}
                 <li>No answers.</li>    
             {% endfor %}
@@ -20,7 +37,11 @@ Subforum/{{ subforum.subforum_name }}
 
     </div>
 
-    <a href="{% url 'jmiforums:answer' subforum_name ques_id %}">Give Answer</a>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 
 <br>
     <a href="{% url 'jmiforums:homepage' %}">Go back</a>

@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
+from django.utils import timezone
 from .models import *
 from .forum import *
 from django.contrib.auth.forms import( UserCreationForm, 
@@ -9,6 +10,7 @@ from django.contrib.auth.forms import( UserCreationForm,
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.generic import RedirectView, ListView
 from django.urls import reverse
 from django.db import transaction, DatabaseError
 
@@ -19,9 +21,26 @@ def homepage(request):
   context={
             "moderator": Moderator.objects.all,
             "subforum": Subforum.objects.all,
+            "questions": Question.objects.all,
             "user": request.user,
           }
   return render(request, "jmiforums/home.html", context)
+
+
+class PostListView(ListView):
+  model = Question
+  template_name = 'jmiforums/home.html'            #jmiforums/question_list.html
+  context_object_name = 'questions'
+  ordering = ['-date_posted']
+  def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context={
+            "moderator": Moderator.objects.all,
+            "subforum": Subforum.objects.all,
+            "questions": Question.objects.all,
+          }
+      return context
+  
 
 def register(request):
   if request.method == 'POST':
@@ -141,31 +160,71 @@ def question(request, subforum_name):
   return render(request, 'jmiforums/question.html', context) 
 
 @login_required
-def view_question(request, subforum_name, ques_id):
-    ques = Question.objects.get(pk=ques_id)
-    ques_text = ques.ques_text
-    ans = Answer.objects.filter(ques_id=ques_id).values()
-
-    context = {
-      'ques_text': ques_text,
-      'subforum_name': subforum_name,
-      'ques_id': ques.id,
-      'ans': ans,
-    }
-    return render(request, 'jmiforums/view_question.html', context)
-
-@login_required
-def answer(request, subforum_name, ques_id):
-  form = Answers(request.POST or None)
+def instant_question(request):
+  form = Instant_questions(request.POST or None)
   if form.is_valid():
-    answer = form.save(commit=False)
-    answer.user_id = User.objects.get(pk=request.user.pk)
-    answer.ques_id = Question.objects.get(pk=ques_id)
-    answer.save()
-    return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
+    question = form.save(commit=False)
+    question.user_id = User.objects.get(pk=request.user.pk)
+    question.save()
+    return HttpResponseRedirect('/%s/' %question.subforum_id)
 
   context = {
     'form' : form,
   }
 
-  return render(request, 'jmiforums/answer.html', context)
+  return render(request, 'jmiforums/instant_question.html', context)
+
+@login_required
+def view_question(request, subforum_name, ques_id):
+    ques = Question.objects.get(pk=ques_id)
+    ans = Answer.objects.filter(ques_id=ques_id).values()
+    com = Comment.objects.filter(ques_id=ques_id).values()
+    form = Answers(request.POST or None)
+    form2 = Comments(request.POST or None)
+    if form.is_valid():
+      answer = form.save(commit=False)
+      answer.user_id = User.objects.get(pk=request.user.pk)
+      answer.ques_id = Question.objects.get(pk=ques_id)
+      answer.save()
+      return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
+
+    if form2.is_valid():
+      comment = form.save(commit=False)
+      comment.user_id = User.objects.get(pk=request.user.pk)
+      comment.ques_id = Question.objects.get(pk=ques_id)
+      comment.save()
+      return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
+
+    context = {
+      'ques': ques,
+      'subforum_name': subforum_name,
+      'ans': ans,
+      'com': com,
+      'form': form,
+      'form2': form2,
+    }
+    return render(request, 'jmiforums/view_question.html', context)
+
+# @login_required
+# def answer(request, subforum_name, ques_id):
+#   form = Answers(request.POST or None)
+#   if form.is_valid():
+#     answer = form.save(commit=False)
+#     answer.user_id = User.objects.get(pk=request.user.pk)
+#     answer.ques_id = Question.objects.get(pk=ques_id)
+#     answer.save()
+#     return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
+
+#   context = {
+#     'form' : form,
+#   }
+
+#   return render(request, 'jmiforums/answer.html', context)
+
+# @login_required
+# class upvote(RedirectView):
+#   def get_redirect_url(self, *args, **kwargs):
+#     slug = self.kwargs.get('slug')
+#     print(slug)
+#     obj = get_object_or_404(Post, slug=slug)
+#     return obj.get_absolute_url()

@@ -18,12 +18,28 @@ class Questions(forms.ModelForm):
             'ques_text'
         ]        
 
+class Instant_questions(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            'subforum_id',
+            'ques_text'
+        ]
+    
+
 class Answers(forms.ModelForm):
     class Meta:
         model = Answer
         fields = [
-            'ans_text'
+            'ans_text',
         ] 
+
+class Comments(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'comment_text'
+        ]
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)

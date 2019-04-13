@@ -6,8 +6,8 @@ Home Page
 
   <div class="container">
     {% for mod in moderator %}
-    <p>This is the moderator of <strong>JMI Forum</strong>.</p><br>
-    <p><strong>{{ mod.username }}</strong></p><br>
+    <p>This is the moderator of <strong>JMI Forum</strong>.</p>
+    <p><strong>{{ mod.username }}</strong></p>
     {% endfor %}
   </div>
 
@@ -15,12 +15,24 @@ Home Page
 
   <div class="row">
     <div class="col-md-3">
+    <a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a>
       {% for sub in subforum %}
         <a href="{% url 'jmiforums:subforum' sub.subforum_name %}">Go to {{sub.subforum_name}}</a><br/>
       {% endfor %}
     </div>
-    <div class="col-md-6"></div>
-    <div class="col-md-3"><a href="{% url 'jmiforums:create' %}"><h2>Add a subforum</h2></a></div>
+    <div class="col-md-6">
+      <ul>
+        {% for q in questions %}
+            <a href="{% url 'jmiforums:view_question' q.subforum_id.subforum_name q.id %}"><li>{{ q.ques_text }}</li></a>
+        {% empty %}
+            <li>No question!</li>    
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-3">
+      {% comment %} Add ask question link {% endcomment %}
+      <a href="{% url 'jmiforums:instant_question' %}"><h2>Add a question</h2></a>
+    </div>
 
   </div>
 {% endblock %}

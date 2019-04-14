@@ -33,6 +33,7 @@ urlpatterns = [
     path("question/", views.instant_question, name="instant_question"),
     path("<slug:subforum_name>/<int:ques_id>/view/", views.view_question, name="view_question"),
     path("<slug:subforum_name>/<int:ques_id>/update/", views.ques_update, name="ques_update"),
+    path("<slug:subforum_name>/<int:ques_id>/delete/", views.ques_delete, name="ques_delete"),
     # path("<slug:subforum_name>/<int:ques_id>/answer/", views.answer, name='answer'),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),

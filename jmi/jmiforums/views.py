@@ -19,16 +19,23 @@ from django.contrib import messages
 from django.views.generic import RedirectView, ListView
 from django.urls import reverse
 from django.db import transaction, DatabaseError
+from django.core.paginator import Paginator
 
 # Create your views here.
 def homepage(request):
   if not request.user.is_authenticated:
     return render(request, "jmiforums/login.html", {"message": None})
+  moderator= Moderator.objects.all()
+  subforum= Subforum.objects.all()
+  questions= Question.objects.all().order_by('-ques_date')
+  user= request.user
+  paginator = Paginator(questions, 5)
+  page = request.GET.get('page')
   context={
-            "moderator": Moderator.objects.all,
-            "subforum": Subforum.objects.all,
-            "questions": Question.objects.all,
-            "user": request.user,
+            "moderator": moderator,
+            "subforum": subforum,
+            "questions": paginator.get_page(page),
+            "user": user,
           }
   return render(request, "jmiforums/home.html", context)
 
@@ -98,7 +105,7 @@ def subforum(request, subforum_name):
   context={
     'subforum': subforum,
     'moderator': Moderator.objects.all(),
-    'question': Question.objects.filter(subforum_id_id=sub_id).values()
+    'question': Question.objects.filter(subforum_id_id=sub_id).order_by('-ques_date')
   }
   return render(request, "jmiforums/subforum.html", context)
 
@@ -160,7 +167,7 @@ def question(request, subforum_name):
     question.user_id = User.objects.get(pk=request.user.pk)
     question.subforum_id = Subforum.objects.get(subforum_name=subforum_name)
     question.save()
-    messages.success(request, f'You successfully posted question on {question.subforum}.')
+    messages.success(request, f'You successfully posted question on {question.subforum_id}.')
     return HttpResponseRedirect('/%s/' %subforum_name)
 
   context = {
@@ -217,6 +224,7 @@ def view_question(request, subforum_name, ques_id):
     }
     return render(request, 'jmiforums/view_question.html', context)
 
+@login_required
 def ques_update(request, subforum_name, ques_id):
   ques = get_object_or_404(Question, id=ques_id)
   form = Questions(request.POST or None, instance=ques)
@@ -232,6 +240,13 @@ def ques_update(request, subforum_name, ques_id):
     'form': form
   }
   return render(request, 'jmiforums/question.html', context)
+
+@login_required
+def ques_delete(request, subforum_name, ques_id):
+  ques = get_object_or_404(Question, id=ques_id)
+  ques.delete()
+  messages.success(request, f'You successfully Deleted your question.')
+  return HttpResponseRedirect('/%s/' %subforum_name)
 
 
 # @login_required

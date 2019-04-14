@@ -9,12 +9,7 @@ class Profile(models.Model):
   age = models.IntegerField(default=18)
   university = models.CharField(max_length=100, default='')
   department = models.CharField(max_length=50, default='')
-
-  def __str__(self):
-      return "@{}".format(self.username)
-
-
-
+  image = models.ImageField( upload_to='profile_image', blank=True)
 
 
 # @receiver(post_save, sender=User)
@@ -36,7 +31,7 @@ class Moderator(models.Model):
     return self.name
 
 class Subforum(models.Model):
-  subforum_name = models.CharField(max_length=50,unique=True)
+  subforum_name = models.CharField(max_length=50)
   subforum_description = models.TextField(blank=True, null=True)
   users = models.ManyToManyField(User)
   mods = models.ManyToManyField(Moderator)
@@ -44,8 +39,6 @@ class Subforum(models.Model):
 
   def __str__(self):
     return self.subforum_name
-
-
 
 
 class Question(models.Model):
@@ -73,4 +66,4 @@ class Comment(models.Model):
   user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
   ques_id = models.ForeignKey(Question, on_delete=models.CASCADE)
   comment_text = models.TextField()
-  comment_date = models.DateTimeField(default=timezone.now)
+  comment_date = models.DateTimeField(default=timezone.now)  

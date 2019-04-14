@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jmiforums.apps.JmiforumsConfig',
-    'bootstrap3',
     # 'tinymce',
 ]
 
@@ -78,9 +77,12 @@ WSGI_APPLICATION = 'jmi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE':'django.db.backends.sqlite3',
-        'NAME':os.path.join(BASE_DIR,'db.sqlite3')
-
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'jmiforums',
+        'USER': 'vishesh',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '3000',
     }
 }
 

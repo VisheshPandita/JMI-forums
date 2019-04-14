@@ -16,7 +16,7 @@ class Questions(forms.ModelForm):
         model = Question
         fields = [
             'ques_text'
-        ]
+        ]        
 
 class Instant_questions(forms.ModelForm):
     class Meta:
@@ -25,14 +25,14 @@ class Instant_questions(forms.ModelForm):
             'subforum_id',
             'ques_text'
         ]
-
+    
 
 class Answers(forms.ModelForm):
     class Meta:
         model = Answer
         fields = [
             'ans_text',
-        ]
+        ] 
 
 class Comments(forms.ModelForm):
     class Meta:
@@ -46,7 +46,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -62,7 +62,7 @@ class ProfileForm(forms.ModelForm):
     #     if commit:
     #         user.save()
 
-    #     return user
+    #     return user    
 
 class EditProfile(UserChangeForm):
     class Meta:

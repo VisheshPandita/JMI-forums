@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-from .views import PostListView
+# from .views import PostListView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
@@ -23,7 +23,7 @@ from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, 
 app_name = "jmiforums"
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='homepage'),
+    path('', views.homepage, name='homepage'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path("register/subforum/", views.create, name="create"),
@@ -32,6 +32,7 @@ urlpatterns = [
     path("<slug:subforum_name>/question/", views.question, name="question"),
     path("question/", views.instant_question, name="instant_question"),
     path("<slug:subforum_name>/<int:ques_id>/view/", views.view_question, name="view_question"),
+    path("<slug:subforum_name>/<int:ques_id>/update/", views.ques_update, name="ques_update"),
     # path("<slug:subforum_name>/<int:ques_id>/answer/", views.answer, name='answer'),
     path("profile/edit/", views.edit_profile, name='edit_profile'),
     path("profile/edit/password/", views.change_password, name='change_password'),

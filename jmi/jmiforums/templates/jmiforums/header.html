@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
   <link rel="stylesheet" href="{% load staticfiles %}"/>
   <title>{% block title %}{% endblock %}</title>
 </head>
@@ -17,14 +23,53 @@
     {% endfor %}
   {% endif %}
     <!-- This is navbar -->
+    <nav class="navbar mynav" role='navigation' id='navbar'>
+      <div class="containers">
+        <ul class='nav navbar-nav navbar-right'>
+          {% if user.is_authenticated %}
+            <li><a class="btn btn-primary" href="#">Ask Question</a></li>
+            <li><a class="btn btn-primary" href="{% url 'jmiforums:profile' %}"> Profile</a></li>
+            <li><a class="btn btn-primary" href="{% url 'jmiforums:logout' %}" role="button">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'jmiforums:register' %}">Sign Up</a></li>
+            <li><a class="btn btn-primary" href="{%url 'jmiforums:login' %}" role="button">Login</a></li>
+          {% endif %}
 
+        </ul
+        <ul class="nav navbar-nav navbar-left">
+          {% if user.is_authenticated %}
+          <li><a class="navbar-brand mynav"href="{% url 'jmiforums:homepage'%}">JMI Forum</a></li>
+          <li>
+          <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a class="navbar-brand mynav"href="{% url 'jmiforums:homepage'%}">JMI Forum</a></li>
+          <li>
+          <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </li>
+          {% endif %}
+
+
+        </ul>
+
+      </div>
+
+    </nav>
+
+<!--
     {% if user.is_authenticated %}
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'jmiforums:homepage' %}">JMI forum</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -37,7 +82,7 @@
           </form>
         </li>
       </ul>
-      
+
       <a class="btn btn-primary" href="{% url 'jmiforums:logout' %}" role="button">Logout</a>
 
     </div>
@@ -48,7 +93,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
@@ -61,15 +106,17 @@
           </form>
         </li>
       </ul>
-      
+
       <a class="btn btn-primary" href="{% url 'jmiforums:login' %}" role="button">Login</a>
 
     </div>
   </nav>
-    {% endif %}
+    {% endif %} -->
 
-  
+
 <!--  -->
+<div class="container mycontent">
   {% block body %}{% endblock %}
+</div>
 </body>
 </html>

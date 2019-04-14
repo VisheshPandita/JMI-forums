@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from .models import *
 from .forum import *
-from django.contrib.auth.forms import( UserCreationForm, 
+from django.contrib.auth.forms import( UserCreationForm,
                                         UserChangeForm,
                                         PasswordChangeForm)
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import RedirectView, ListView
-from django.urls import reverse
+from django.urls import reverse,reverse_lazy
 from django.db import transaction, DatabaseError
 
 # Create your views here.
@@ -40,7 +40,7 @@ class PostListView(ListView):
             "questions": Question.objects.all,
           }
       return context
-  
+
 
 def register(request):
   if request.method == 'POST':
@@ -54,7 +54,7 @@ def register(request):
           profile.user = user
           profile.save()
       except DatabaseError:
-        pass    
+        pass
 
       username = form.cleaned_data.get('username')
       messages.success(request, f'Account Created for {username}!')
@@ -73,7 +73,7 @@ def login_view(request):
       login(request, user)
       return HttpResponseRedirect(reverse("jmiforums:homepage"))
     else:
-      return render(request, "jmiforums/login.html", {"message": "Invalid username/password. "})  
+      return render(request, "jmiforums/login.html", {"message": "Invalid username/password. "})
   else:
     return render(request, 'jmiforums/login.html')
 
@@ -87,7 +87,7 @@ def subforum(request, subforum_name):
     sub_id = Subforum.objects.get(subforum_name=subforum_name)
   except Subforum.DoesNotExist:
     raise Http404("Subform does not exist")
-  
+
   context={
     'subforum': subforum,
     'moderator': Moderator.objects.all(),
@@ -106,7 +106,7 @@ def create(request):
     'form' : form
   }
 
-  return render(request, 'jmiforums/createSub.html', context)  
+  return render(request, 'jmiforums/createSub.html', context)
 
 @login_required
 def profile(request):
@@ -141,7 +141,7 @@ def change_password(request):
   else:
     form = PasswordChangeForm(user=request.user)
     args = {'form': form}
-    return render(request, 'jmiforums/change_password.html', args)    
+    return render(request, 'jmiforums/change_password.html', args)
 
 @login_required
 def question(request, subforum_name):
@@ -157,7 +157,7 @@ def question(request, subforum_name):
     'form' : form,
   }
 
-  return render(request, 'jmiforums/question.html', context) 
+  return render(request, 'jmiforums/question.html', context)
 
 @login_required
 def instant_question(request):

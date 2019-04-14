@@ -189,7 +189,7 @@ def view_question(request, subforum_name, ques_id):
       return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
 
     if form2.is_valid():
-      comment = form.save(commit=False)
+      comment = form2.save(commit=False)
       comment.user_id = User.objects.get(pk=request.user.pk)
       comment.ques_id = Question.objects.get(pk=ques_id)
       comment.save()

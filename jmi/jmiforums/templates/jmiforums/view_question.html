@@ -10,6 +10,9 @@ Subforum/{{ subforum_name }}
     <h1>Question:</h1>
     <div class="container">
         <p><h2>{{ ques.ques_text }}</h2></p>
+        <a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">Twitter</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}/">Facebook</a>
+          
         <p>Upvotes: {{ ques.upvote.count }}</p>
         <small class="text-muted">
             <ul>
@@ -44,5 +47,7 @@ Subforum/{{ subforum_name }}
     </form>
 
 <br>
-    <a href="{% url 'jmiforums:homepage' %}">Go back</a>
+    <a href="{% url 'jmiforums:homepage' %}">Go back</a><br>
+    <a href="{% url 'jmiforums:ques_update' subforum_name ques.id %}">Update Question</a><br>
+    <a href="{% url 'jmiforums:ques_delete' subforum_name ques.id %}">Delete Question</a>
 {% endblock %}

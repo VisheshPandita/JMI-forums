@@ -1,7 +1,10 @@
+from requests.utils import requote_uri
+from django.db.models import Q
 from django.shortcuts import (render, 
                               redirect, 
                               HttpResponseRedirect, 
-                              get_object_or_404)
+                              get_object_or_404,
+                              Http404)
 from django.http import HttpResponse, Http404
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -22,12 +25,20 @@ from django.db import transaction, DatabaseError
 from django.core.paginator import Paginator
 
 # Create your views here.
+
+# ----HOMEPAGE------------
+
 def homepage(request):
   if not request.user.is_authenticated:
     return render(request, "jmiforums/login.html", {"message": None})
+  query = request.GET.get("q") 
   moderator= Moderator.objects.all()
   subforum= Subforum.objects.all()
   questions= Question.objects.all().order_by('-ques_date')
+  if query:
+    questions = questions.filter(
+      Q(ques_text__icontains=query)
+      ) 
   user= request.user
   paginator = Paginator(questions, 5)
   page = request.GET.get('page')
@@ -40,20 +51,8 @@ def homepage(request):
   return render(request, "jmiforums/home.html", context)
 
 
-# class PostListView(ListView):
-#   model = Question
-#   template_name = 'jmiforums/home.html'            #jmiforums/question_list.html
-#   context_object_name = 'questions'
-#   ordering = ['-date_posted']
-#   def get_context_data(self, **kwargs):
-#       context = super().get_context_data(**kwargs)
-#       context={
-#             "moderator": Moderator.objects.all,
-#             "subforum": Subforum.objects.all,
-#             "questions": Question.objects.all,
-#           }
-#       return context
   
+# ------REGISTER USER-----------
 
 def register(request):
   if request.method == 'POST':
@@ -77,6 +76,9 @@ def register(request):
     profile_form = ProfileForm()
   return render(request, 'jmiforums/register.html', {"form":form, "profile_form": profile_form,})
 
+
+# -------LOGIN ROUTE-------
+
 def login_view(request):
   if request.method == 'POST':
     username = request.POST["username"]
@@ -91,9 +93,13 @@ def login_view(request):
   else:
     return render(request, 'jmiforums/login.html')
 
+# -------LOGOUT ROUTE----------
 def logout_view(request):
   logout(request)
   return render(request,"jmiforums/login.html", {"message": "Logged Out"})
+
+
+# -------SUBFORUM VIEW---------
 
 def subforum(request, subforum_name):
   try:
@@ -108,6 +114,8 @@ def subforum(request, subforum_name):
     'question': Question.objects.filter(subforum_id_id=sub_id).order_by('-ques_date')
   }
   return render(request, "jmiforums/subforum.html", context)
+
+# ------SUBFORUM CREATE---------
 
 @login_required
 def create(request):
@@ -124,11 +132,14 @@ def create(request):
 
   return render(request, 'jmiforums/createSub.html', context)  
 
+# -------USER PROFILE------
+
 @login_required
 def profile(request):
   args = {'user': request.user}
   return render(request, 'jmiforums/profile.html', args)
 
+# -------EDIT PROFILE--------
 @login_required
 def edit_profile(request):
   if request.method == 'POST':
@@ -141,6 +152,8 @@ def edit_profile(request):
     form = EditProfile(instance=request.user)
     args = {'form': form}
     return render(request, 'jmiforums/edit_profile.html', args)
+
+# --------EDIT PASSWORD-----
 
 @login_required
 def change_password(request):
@@ -159,6 +172,8 @@ def change_password(request):
     args = {'form': form}
     return render(request, 'jmiforums/change_password.html', args)    
 
+# ----------ASK QUESTIONS----------
+
 @login_required
 def question(request, subforum_name):
   form = Questions(request.POST or None)
@@ -176,6 +191,8 @@ def question(request, subforum_name):
 
   return render(request, 'jmiforums/question.html', context) 
 
+# --------ASK INSTANCE QUESTIONS------
+
 @login_required
 def instant_question(request):
   form = Instant_questions(request.POST or None)
@@ -192,11 +209,15 @@ def instant_question(request):
 
   return render(request, 'jmiforums/instant_question.html', context)
 
+
+# ----------View question ---------
+
 @login_required
 def view_question(request, subforum_name, ques_id):
     ques = Question.objects.get(pk=ques_id)
     ans = Answer.objects.filter(ques_id=ques_id).values()
     com = Comment.objects.filter(ques_id=ques_id).values()
+    share_string = requote_uri(ques.ques_text)
     form = Answers(request.POST or None)
     form2 = Comments(request.POST or None)
     if form.is_valid():
@@ -204,7 +225,7 @@ def view_question(request, subforum_name, ques_id):
       answer.user_id = User.objects.get(pk=request.user.pk)
       answer.ques_id = Question.objects.get(pk=ques_id)
       answer.save()
-      messages.success(request, f'You successfully posted question on {question.subforum}.')
+      messages.success(request, f'You successfully posted question on {ques.subforum}.')
       return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
 
     if form2.is_valid():
@@ -221,11 +242,16 @@ def view_question(request, subforum_name, ques_id):
       'com': com,
       'form': form,
       'form2': form2,
+      'share_string': share_string,
     }
     return render(request, 'jmiforums/view_question.html', context)
 
+# ------------UPDATE QUESTION------------
+
 @login_required
 def ques_update(request, subforum_name, ques_id):
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
   ques = get_object_or_404(Question, id=ques_id)
   form = Questions(request.POST or None, instance=ques)
   if form.is_valid():
@@ -241,8 +267,13 @@ def ques_update(request, subforum_name, ques_id):
   }
   return render(request, 'jmiforums/question.html', context)
 
+
+# --------DELETE QUESTION--------
+
 @login_required
 def ques_delete(request, subforum_name, ques_id):
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
   ques = get_object_or_404(Question, id=ques_id)
   ques.delete()
   messages.success(request, f'You successfully Deleted your question.')
@@ -253,7 +284,7 @@ def ques_delete(request, subforum_name, ques_id):
 # def answer(request, subforum_name, ques_id):
 #   form = Answers(request.POST or None)
 #   if form.is_valid():
-#     answer = form.save(commit=False)
+#     answer = formQ(subforum_id__icontains=query).save(commit=False)
 #     answer.user_id = User.objects.get(pk=request.user.pk)
 #     answer.ques_id = Question.objects.get(pk=ques_id)
 #     answer.save()
@@ -265,10 +296,12 @@ def ques_delete(request, subforum_name, ques_id):
 
 #   return render(request, 'jmiforums/answer.html', context)
 
-# @login_required
-# class upvote(RedirectView):
-#   def get_redirect_url(self, *args, **kwargs):
-#     slug = self.kwargs.get('slug')
-#     print(slug)
-#     obj = get_object_or_404(Post, slug=slug)
-#     return obj.get_absolute_url()
+# ----------UPVOTES---------
+
+@login_required
+class upvote(RedirectView):
+  def get_redirect_url(self, *args, **kwargs):
+    slug = self.kwargs.get('slug')
+    print(slug)
+    obj = get_object_or_404(Post, slug=slug)
+    return obj.get_absolute_url()

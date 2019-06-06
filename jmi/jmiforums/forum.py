@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import *
+from pagedown.widgets import PagedownWidget
 
 class Subforums(forms.ModelForm):
     class Meta:
@@ -19,6 +20,7 @@ class Questions(forms.ModelForm):
         ]        
 
 class Instant_questions(forms.ModelForm):
+    
     class Meta:
         model = Question
         fields = [
@@ -28,6 +30,7 @@ class Instant_questions(forms.ModelForm):
     
 
 class Answers(forms.ModelForm):
+    ans_text = forms.CharField(widget=PagedownWidget)
     class Meta:
         model = Answer
         fields = [

@@ -31,7 +31,25 @@ from django.core.paginator import Paginator
 def homepage(request):
   if not request.user.is_authenticated:
     return render(request, "jmiforums/login.html", {"message": None})
-  query = request.GET.get("q") 
+  moderator= Moderator.objects.all()
+  subforum= Subforum.objects.all()
+  questions= Question.objects.all().order_by('-ques_date')
+  user= request.user
+  paginator = Paginator(questions, 5)
+  page = request.GET.get('page')
+  context={
+            "moderator": moderator,
+            "subforum": subforum,
+            "questions": paginator.get_page(page),
+            "user": user,
+          }
+  return render(request, "jmiforums/home.html", context)
+
+
+# ------SEARCH-----------------
+
+def search(request):
+  query = request.GET.get("q")
   moderator= Moderator.objects.all()
   subforum= Subforum.objects.all()
   questions= Question.objects.all().order_by('-ques_date')
@@ -50,8 +68,6 @@ def homepage(request):
           }
   return render(request, "jmiforums/home.html", context)
 
-
-  
 # ------REGISTER USER-----------
 
 def register(request):
@@ -211,6 +227,7 @@ def instant_question(request):
 
 
 # ----------View question ---------
+# ----------comments insdie too---
 
 @login_required
 def view_question(request, subforum_name, ques_id):
@@ -225,7 +242,7 @@ def view_question(request, subforum_name, ques_id):
       answer.user_id = User.objects.get(pk=request.user.pk)
       answer.ques_id = Question.objects.get(pk=ques_id)
       answer.save()
-      messages.success(request, f'You successfully posted question on {ques.subforum}.')
+      messages.success(request, f'You successfully posted question on {ques.subforum_id.subforum_name}.')
       return HttpResponseRedirect("/{subforum_name}/{ques_id}/view".format(subforum_name=subforum_name, ques_id=ques_id))
 
     if form2.is_valid():

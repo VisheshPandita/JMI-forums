@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="{% load staticfiles %}"/>
+  {% block head_extra %}{% endblock head_extra %}
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -31,7 +32,7 @@
           <a class="nav-link" href="{% url 'jmiforums:profile' %}">Profile</a>
         </li>
         <li>
-          <form class="form-inline my-2 my-lg-0">
+          <form class="form-inline my-2 my-lg-0" action="{% url 'jmiforums:search' %}" >
             <input class="form-control mr-sm-2" type="search"  name='q' placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" value="Search" type="submit">Search Questions</button>
           </form>
@@ -65,5 +66,22 @@
   
 <!--  -->
   {% block body %}{% endblock %}
+
+  <script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.2/marked.min.js"></script>
+  
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".content-markdown").each(function(){
+      var content = $(this).text()
+      var markdownContent = marked(content)
+      $(this).html(markdownContent)
+    })
+  })
+</script>
+
 </body>
 </html>

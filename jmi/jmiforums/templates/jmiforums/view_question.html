@@ -1,4 +1,12 @@
 {% extends "jmiforums/header.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_extra %}
+{{ form.media }}
+{% endblock head_extra %}
+
+
 {% block title %}
 Subforum/{{ subforum_name }}
 {% endblock %}
@@ -24,13 +32,13 @@ Subforum/{{ subforum_name }}
             </ul>
             <form method="POST">
                 {% csrf_token %}
-                {{ form2.as_p }}
+                {{ form2|crispy }}
                 <button type="submit">Submit</button>
             </form>
         </small>    
         <ul>
             {% for a in ans %}
-                <li>
+                <li class="content-markdown">
                     {{ a.ans_text }}
                 </li>
             {% empty %}
@@ -42,7 +50,7 @@ Subforum/{{ subforum_name }}
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Submit</button>
     </form>
 
